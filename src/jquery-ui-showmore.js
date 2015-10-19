@@ -25,18 +25,24 @@ var showmore = $.widget('aw.showmore', {
 	options: {
 		moreText: "Show More",
 		lessText: "Show Less",
-		collapsedHeight: 200,
-		duration: 200, // possibly animate
+		collapsedHeight: 'max-height',
+		duration: 200, // consider migrating to animate
 		expand: undefined,
 		collapse: undefined,
 		showIcon: true
 	},
 	_create: function() {
 		this._super();
+		// transform collapsedHeight as needed
+		if (this.options.collapsedHeight === 'max-height')
+			this.options.collapsedHeight = $(this.element).css('max-height');
+		this.options.collapsedHeight = this._toPixels(this.options.collapsedHeight, this.element);
+		if (isNaN(this.options.collapsedHeight))
+			this.options.collapsedHeight = 200;
 		var $element = $(this.element),
 			curDisplay = $element.css('display'),
-			initialHeight = curDisplay !== 'none' ? $element.outerHeight() : this.options.collapsedHeight;
-		var wrapper = this.wrapper = $element.wrap('<div class="ui-showmore-wrapper" style="height:' + initialHeight + 'px;" aria-collapsible="true"></div>').parent().uniqueId()
+			initialHeight = curDisplay !== 'none' ? $element.outerHeight() : this.options.collapsedHeight,
+			wrapper = this.wrapper = $element.wrap('<div class="ui-showmore-wrapper" style="height:' + initialHeight + 'px;" aria-collapsible="true"></div>').parent().uniqueId()
 			.append('<div class="ui-showmore-more" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><span>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-s ui-showmore-icon"></span>' : '') + '<span>' + this.options.moreText + '</span></span></div>')
 			.append('<div class="ui-showmore-less" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><span>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-n ui-showmore-icon"></span>' : '') + '<span>' + this.options.lessText + '</span></span></div>');
 		this._on(wrapper.find('.ui-showmore-more > span'), {'click': this._expand});
@@ -114,6 +120,21 @@ var showmore = $.widget('aw.showmore', {
 		if (typeof this.isExpanded !== 'undefined') {
 			this.isExpanded ? this._collapse() : this._expand();
 		}
+	},
+	_toPixels: function(value, context) {
+		if (typeof value === 'number') return value;
+		if (typeof value !== "string") return undefined;
+		if ($.isNumeric(value) || (value.endsWith("px") && $.isNumeric(value.substring(0, value.length - 2)))) {
+			value = parseFloat(value);
+			if (!isNaN(value) && (value >= 0))
+				return value;
+		} else if (value.endsWith("em") && $.isNumeric(value.substring(0, value.length - 2))) {
+			value = parseFloat(value);
+			if (!isNaN(value) && (value >= 0)) {
+				return parseFloat($(context).css('line-height')) * value; //emsToPixels(value, context);
+			}
+		}
+		return NaN;
 	}
 });
 
