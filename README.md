@@ -13,6 +13,8 @@ Extensive features:
 - Callbacks for content expand and collapse
 - Gradient fade support via ccs
 
+Demos and further information is available at http://borgboyone.github.io/jquery-ui-showmore/
+
 Usage
 ---
 At a minimum:
