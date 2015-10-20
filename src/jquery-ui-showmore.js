@@ -80,7 +80,7 @@ var showmore = $.widget('aw.showmore', {
         $('.ui-showmore-more').hide();
         $('.ui-showmore-less').show();
 
-		if (event) this._trigger('expand', event, {});
+		if (event) this._trigger('expand', event, {item: $(this.element), element: this.element, expanded: $(this.element)});
 	},
 	collapse: function() {
 		if ((typeof this.isExpanded !== 'undefined') && this.isExpanded)
@@ -94,7 +94,7 @@ var showmore = $.widget('aw.showmore', {
         $('.ui-showmore-less').hide();
         $('.ui-showmore-more').show();
 
-		if (event) this._trigger('collapse', event, {});
+		if (event) this._trigger('collapse', event, {item: $(this.element), element: this.element, collapsed: $(this.element)});
 	},
 	// in case content has changed
 	refresh: function() {
