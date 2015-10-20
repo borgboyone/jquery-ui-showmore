@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>jQuery-ui-showmore by borgboyone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">jQuery-ui-showmore</h1>
+      <h2 class="project-tagline">Robust and flexible jQuery UI based widget for expanding and collapsing large areas of content via &quot;Show More&quot; and &quot;Show Less&quot; controls.</h2>
+      <a href="https://github.com/borgboyone/jquery-ui-showmore" class="btn">View on GitHub</a>
+      <a href="https://github.com/borgboyone/jquery-ui-showmore/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/borgboyone/jquery-ui-showmore/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>Extensive features:</p>
+
+<ul>
+<li>Automatically detects if controls are needed for the content area based on collapsedHeight</li>
+<li>Refresh function available for situations where the content or the sizing of the content area changes</li>
+<li>Built-in safeguards to prevent content bounce on initialization (provided an initial max-height is supplied)</li>
+<li>Initial max-height class provided (ui-showmore-initial)</li>
+<li>Control text customizable via options</li>
+<li>Built-in jQuery UI icon support (solid up and down triangles)</li>
+<li>Accepts collapsed height in pixels, ems, or taken from content max-height</li>
+<li>Callbacks for content expand and collapse</li>
+<li>Gradient fade support via ccs</li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>At a minimum:</p>
+
+<div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#content .article<span class="pl-pds">'</span></span>).showmore();</pre></div>
+
+<p>With specific options:</p>
+
+<div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#content .article<span class="pl-pds">'</span></span>).showmore({
+        moreText<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>I want to see more!<span class="pl-pds">'</span></span>,
+        lessText<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>I<span class="pl-cce">\'</span>m done.<span class="pl-pds">'</span></span>,
+        showIcon<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+        duration<span class="pl-k">:</span> <span class="pl-c1">400</span>
+    });</pre></div>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<ul>
+<li>
+<code>moreText</code>: Text to display for the expand control. (Default: 'Show More')</li>
+<li>
+<code>lessText</code>: Text to display for the collapse control. (Default: 'Show Less')</li>
+<li>
+<code>collapsedHeight</code>: Height of the collapsed content area either as numeric (pixels), px's ('100px'), em's ('6em'), or 'max-height'. (Default: 'max-height')</li>
+<li>
+<code>duration</code>: Time in milliseconds for expand and collapse animation. (Default: 200)</li>
+<li>
+<code>showIcon</code>: Display triangle icons with controls. (Default: true)</li>
+</ul>
+
+<h2>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h2>
+
+<ul>
+<li>
+<code>refresh</code>: Examines the content height and determines if the controls are necessary. Maintains the existing expansion state of the controls if they are still required.</li>
+<li>
+<code>expand</code>: Expands the content area if controls are present.</li>
+<li>
+<code>collapse</code>: Collapses the content area if controls are present.</li>
+<li>
+<code>isExpanded</code>: Returns <em>true</em> if the content area is expanded, <em>false</em> if the content area is collapsed, and <em>undefined</em> if controls aren't present.</li>
+<li>
+<code>toggle</code>: Toggles the expanded, collapsed state of the content area if controls are present.</li>
+<li>
+<code>destroy</code>: Removes the showmore visibles and supporting HTML and returns any inline css to its initial state.</li>
+</ul>
+
+<p>A useful example:</p>
+
+<div class="highlight highlight-source-js"><pre>    $(<span class="pl-c1">window</span>).<span class="pl-c1">resize</span>(<span class="pl-k">function</span>() {
+        $(<span class="pl-s"><span class="pl-pds">'</span>#content .article<span class="pl-pds">'</span></span>).showmore(<span class="pl-s"><span class="pl-pds">'</span>refresh<span class="pl-pds">'</span></span>);
+    });</pre></div>
+
+<h2>
+<a id="callbacks" class="anchor" href="#callbacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callbacks</h2>
+
+<p>Callbacks receive the jQuery based event and a ui object with keys: <code>item</code>, <code>element</code> and the event name (either <code>expanded</code> or <code>collapsed</code>).</p>
+
+<ul>
+<li>
+<code>expand</code>: Called when the content area is expanded via user interaction</li>
+<li>
+<code>collapse</code>: Called when the content area is collapsed via user interaction</li>
+</ul>
+
+<p>As an example:</p>
+
+<div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#content .article<span class="pl-pds">'</span></span>).showmore({
+        <span class="pl-en">expand</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">event</span>, <span class="pl-smi">ui</span>) {
+                    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>I was expanded.<span class="pl-pds">'</span></span>);
+                },
+        <span class="pl-en">collapse</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">event</span>, <span class="pl-smi">ui</span>) {
+                    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>I was collapsed.<span class="pl-pds">'</span></span>);
+                }
+    });</pre></div>
+
+<h2>
+<a id="css" class="anchor" href="#css" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSS</h2>
+
+<p>CSS is required in order for the showmore functionality to work correctly.  Working CSS is provided as an example and most users will find little, if any, changes necessary.
+An initial CSS class is provided (<em>ui-shomore-initial</em>) for users to apply to the content area so that the content displays in a collapsed state on page render and also to prevent content bounce on showmore initialization. Inline CSS is also acceptable.  Remember to use <em>max-height</em> and not <em>height</em> for correct functionality.
+Since most users desire a linear fade of the collapsed content leading into the 'Show More' control, the example CSS illustrates the use of this concept.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT License. Copyright 2015, Anthony Wells.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/borgboyone/jquery-ui-showmore">jQuery-ui-showmore</a> is maintained by <a href="https://github.com/borgboyone">borgboyone</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
