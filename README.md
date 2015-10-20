@@ -44,7 +44,7 @@ Methods
 - `refresh`: Examines the content height and determines if the controls are necessary. Maintains the existing expansion state of the controls if they are still required.
 - `expand`: Expands the content area if controls are present.
 - `collapse`: Collapses the content area if controls are present.
-- `isExpanded`: Returns *true* if the content area is expanded, *false* if the content area is collapsed, and *undefined* if controls are present.
+- `isExpanded`: Returns *true* if the content area is expanded, *false* if the content area is collapsed, and *undefined* if controls aren't present.
 - `toggle`: Toggles the expanded, collapsed state of the content area if controls are present.
 - `destroy`: Removes the showmore visibles and supporting HTML and returns any inline css to its initial state.
 
