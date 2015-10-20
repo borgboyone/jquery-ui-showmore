@@ -57,7 +57,7 @@ A useful example:
 
 Callbacks
 ---------
-Callbacks receive the jQuery based event and an empty object for jQuery UI compatibility purposes.
+Callbacks receive the jQuery based event and a ui object with keys: `item`, `element` and the event name (either `expanded` or `collapsed`).
 - `expand`: Called when the content area is expanded via user interaction
 - `collapse`: Called when the content area is collapsed via user interaction
 
