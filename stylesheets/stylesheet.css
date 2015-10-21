@@ -94,7 +94,10 @@ a {
 
 @media screen and (min-width: 64em) {
   .project-tagline {
-    font-size: 1.25rem; } }
+    font-size: 1.25rem;
+    max-width: 755px;
+    margin-left: auto;
+    margin-right: auto; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .project-tagline {
