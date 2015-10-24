@@ -2,12 +2,37 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>jQuery-ui-showmore by borgboyone</title>
+    <title>jQuery-UI-ShowMore by Anthony Wells</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/le-frog/jquery-ui.css">
+    <script src="javascript/jquery-ui-showmore.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui-showmore.css" media="screen">
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $('#example_1').showmore();
+        $('#example_2').showmore({moreText:'Lookie, lookie here!', lessText:'Tired of lookin\'', duration:1200, showIcon: false});
+      });
+    </script>
+    <style>
+      @media screen and (min-width: 64em) {
+        .examples {
+          display: flex;
+          flex-flow: row nowrap;
+        }
+      }
+      @media screen and (max-width: 64em) {
+        .examples {
+          display: flex;
+          flex-flow: column;
+        }
+      }
+    </style>
   </head>
   <body>
     <section class="page-header">
@@ -117,7 +142,31 @@
 
 <p>CSS is required in order for the showmore functionality to work correctly.  Working CSS is provided as an example and most users will find little, if any, changes necessary.
 An initial CSS class is provided (<em>ui-shomore-initial</em>) for users to apply to the content area so that the content displays in a collapsed state on page render and also to prevent content bounce on showmore initialization. Inline CSS is also acceptable.  Remember to use <em>max-height</em> and not <em>height</em> for correct functionality.
-Since most users desire a linear fade of the collapsed content leading into the 'Show More' control, the example CSS illustrates the use of this concept.</p>
+The provided example CSS illustrates the use of a linear fade for collapsed content since many users desire this functionality.</p>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<div class="examples" style="display: flex; flex-flow: row wrap;">
+  <div>
+    <h3>Example #1</h3>
+    <div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#example_1<span class="pl-pds">'</span></span>).showmore();</pre></div>
+    <div id="example_1" class="ui-showmore-initial"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+  <div>
+    <h3>Example #2</h3>
+    <div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#example_<span class="pl-pds">'</span></span>).showmore({
+          <span class="pl-en">moreText</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Lookie, lookie here!<span class="pl-pds">'</span></span>,
+          <span class="pl-en">lessText</span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Tired of lookin\'<span class="pl-pds">'</span></span>,
+          <span class="pl-en">duration</span><span class="pl-k">:</span> 1200,
+          <span class="pl-en">showIcon</span><span class="pl-k">:</span> false
+        });</pre></div>
+    <div id="example_2" class="ui-showmore-initial"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+  </div>
+</div>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
@@ -125,9 +174,9 @@ Since most users desire a linear fade of the collapsed content leading into the 
 <p>MIT License. Copyright 2015, Anthony Wells.</p>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/borgboyone/jquery-ui-showmore">jQuery-ui-showmore</a> is maintained by <a href="https://github.com/borgboyone">borgboyone</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/borgboyone/jquery-ui-showmore">jQuery-ui-showmore</a> is maintained by <a href="https://github.com/borgboyone">Anthony Wells</a>.</span>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+        <span class="site-footer-credits">The base framework for this page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
     </section>
