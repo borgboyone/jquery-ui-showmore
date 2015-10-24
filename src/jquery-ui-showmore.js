@@ -74,11 +74,14 @@ var showmore = $.widget('aw.showmore', {
 	},
 	_expand: function(event) {
         var height = $(this.element).outerHeight() + this.wrapper.find('.ui-showmore-less').outerHeight();
-        this.wrapper.animate({height: height}, this.options.duration);
-        this.wrapper.attr('aria-expanded', 'true');
-        this.isExpanded = true;
-        $('.ui-showmore-more').hide();
-        $('.ui-showmore-less').show();
+        var that = this;
+        this.wrapper
+        	.find('.ui-showmore-more')
+        	.hide().end()
+        	.animate({height: height}, this.options.duration, function() {
+        		that.wrapper.find('.ui-showmore-less').show().attr('aria-expanded', 'true');
+        		that.isExpanded = true;
+        	});
 
 		if (event) this._trigger('expand', event, {item: $(this.element), element: this.element, expanded: $(this.element)});
 	},
@@ -88,11 +91,14 @@ var showmore = $.widget('aw.showmore', {
 	},
 	_collapse: function(event) {
 		var height = this.options.collapsedHeight;
-        this.wrapper.animate({height: height}, this.options.duration);
-        this.wrapper.attr('aria-expanded', 'false');
-        this.isExpanded = false;
-        $('.ui-showmore-less').hide();
-        $('.ui-showmore-more').show();
+		var that = this;
+        this.wrapper
+        	.find('.ui-showmore-less')
+        	.hide().end()
+        	.animate({height: height}, this.options.duration, function() {
+	        	that.wrapper.find('.ui-showmore-more').show().attr('aria-expanded', 'false');
+        		that.isExpanded = false;
+        	});
 
 		if (event) this._trigger('collapse', event, {item: $(this.element), element: this.element, collapsed: $(this.element)});
 	},
