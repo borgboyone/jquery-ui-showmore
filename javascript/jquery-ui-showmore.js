@@ -73,15 +73,15 @@ var showmore = $.widget('aw.showmore', {
 			this._expand();
 	},
 	_expand: function(event) {
-        var height = $(this.element).outerHeight() + this.wrapper.find('.ui-showmore-less').outerHeight();
-        var that = this;
-        this.wrapper
-        	.find('.ui-showmore-more')
-        	.hide().end()
-        	.animate({height: height}, this.options.duration, function() {
-        		that.wrapper.find('.ui-showmore-less').show().attr('aria-expanded', 'true');
-        		that.isExpanded = true;
-        	});
+		var height = $(this.element).outerHeight() + this.wrapper.find('.ui-showmore-less').outerHeight();
+		var that = this;
+		this.wrapper
+			.find('.ui-showmore-more')
+			.hide().end()
+			.animate({height: height}, this.options.duration, function() {
+				that.wrapper.attr('aria-expanded', 'true').find('.ui-showmore-less').show();
+				that.isExpanded = true;
+			});
 
 		if (event) this._trigger('expand', event, {item: $(this.element), element: this.element, expanded: $(this.element)});
 	},
@@ -92,13 +92,13 @@ var showmore = $.widget('aw.showmore', {
 	_collapse: function(event) {
 		var height = this.options.collapsedHeight;
 		var that = this;
-        this.wrapper
-        	.find('.ui-showmore-less')
-        	.hide().end()
-        	.animate({height: height}, this.options.duration, function() {
-	        	that.wrapper.find('.ui-showmore-more').show().attr('aria-expanded', 'false');
-        		that.isExpanded = false;
-        	});
+		this.wrapper
+			.find('.ui-showmore-less')
+			.hide().end()
+			.animate({height: height}, this.options.duration, function() {
+				that.wrapper.attr('aria-expanded', 'false').find('.ui-showmore-more').show();
+				that.isExpanded = false;
+			});
 
 		if (event) this._trigger('collapse', event, {item: $(this.element), element: this.element, collapsed: $(this.element)});
 	},
@@ -106,10 +106,10 @@ var showmore = $.widget('aw.showmore', {
 	refresh: function() {
 		// if not needed, adjust height, hide clickables
 		if ($(this.element).outerHeight() <= this.options.collapsedHeight) {
-			this.wrapper.find('.ui-showmore-less').hide();
-			this.wrapper.find('.ui-showmore-more').hide();
-			this.wrapper.removeAttr('aria-expanded');
-			this.wrapper.outerHeight($(this.element).outerHeight()); // 'auto' is also acceptable
+			this.wrapper.find('.ui-showmore-less').hide().end()
+				.find('.ui-showmore-more').hide().end()
+				.removeAttr('aria-expanded')
+				.outerHeight($(this.element).outerHeight()); // 'auto' is also acceptable
 			this.isExpanded = undefined;
 		} else {
 			if ((typeof this.isExpanded !== 'undefined') && this.isExpanded) {
