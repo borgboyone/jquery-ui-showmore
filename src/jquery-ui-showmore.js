@@ -22,11 +22,12 @@
  */
 
 var showmore = $.widget('aw.showmore', {
+	version: '1.0.0',
 	options: {
 		moreText: "Show More",
 		lessText: "Show Less",
 		collapsedHeight: 'max-height',
-		duration: 200, // consider migrating to animate
+		duration: 200, // consider migrating to animate or offering speed as an alternative or as a replacement
 		expand: undefined,
 		collapse: undefined,
 		showIcon: true
@@ -43,10 +44,10 @@ var showmore = $.widget('aw.showmore', {
 			curDisplay = $element.css('display'),
 			initialHeight = curDisplay !== 'none' ? $element.outerHeight() : this.options.collapsedHeight,
 			wrapper = this.wrapper = $element.wrap('<div class="ui-showmore-wrapper" style="height:' + initialHeight + 'px;" aria-collapsible="true"></div>').parent().uniqueId()
-			.append('<div class="ui-showmore-more" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><span>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-s ui-showmore-icon"></span>' : '') + '<span>' + this.options.moreText + '</span></span></div>')
-			.append('<div class="ui-showmore-less" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><span>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-n ui-showmore-icon"></span>' : '') + '<span>' + this.options.lessText + '</span></span></div>');
-		this._on(wrapper.find('.ui-showmore-more > span'), {'click': this._expand});
-		this._on(wrapper.find('.ui-showmore-less > span'), {'click': this._collapse});
+			.append('<div class="ui-showmore-more" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><div>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-s ui-showmore-icon"></span>' : '') + '<span class="ui-showmore-text">' + this.options.moreText + '</span></div></div>')
+			.append('<div class="ui-showmore-less" style="display: none;" aria-controls="' + $element.parent().prop('id') + '"><div>' + (this.options.showIcon ? '<span class="ui-icon ui-icon-triangle-1-n ui-showmore-icon"></span>' : '') + '<span class="ui-showmore-text">' + this.options.lessText + '</span></div></div>');
+		this._on(wrapper.find('.ui-showmore-more > div'), {'click': this._expand});
+		this._on(wrapper.find('.ui-showmore-less > div'), {'click': this._collapse});
 		// we can now safely clear max-height and/or display none on this.element, but save old values if present in a style tag
 		var elementStyles = $element.prop('style');
 		this.originalStyles = {};
@@ -57,8 +58,15 @@ var showmore = $.widget('aw.showmore', {
 			$element.css('display', 'block');
 		}
 
-		this.isExpanded = undefined;
-		this.refresh();
+		// refresh uses animation for display, need immediate initialization here
+		if ($(this.element).outerHeight() <= this.options.collapsedHeight) {
+			wrapper.outerHeight($(this.element).outerHeight()); // 'auto' is also acceptable
+			this.isExpanded = undefined;
+		} else {
+			wrapper.css('height', this.options.collapsedHeight).attr('aria-expanded', 'false')
+				.find('.ui-showmore-more').show();
+			this.isExpanded = false;
+		}
 	},
 	_destroy: function() {
 		// do this without div flicker
@@ -75,11 +83,9 @@ var showmore = $.widget('aw.showmore', {
 	_expand: function(event) {
 		var height = $(this.element).outerHeight() + this.wrapper.find('.ui-showmore-less').outerHeight();
 		var that = this;
-		this.wrapper
-			.find('.ui-showmore-more')
-			.hide().end()
-			.animate({height: height}, this.options.duration, function() {
-				that.wrapper.attr('aria-expanded', 'true').find('.ui-showmore-less').show();
+		this.wrapper.animate({height: height}, this.options.duration, function() {
+				that.wrapper.attr('aria-expanded', 'true').find('.ui-showmore-more')
+					.hide().end().find('.ui-showmore-less').show();
 				that.isExpanded = true;
 			});
 
@@ -92,11 +98,10 @@ var showmore = $.widget('aw.showmore', {
 	_collapse: function(event) {
 		var height = this.options.collapsedHeight;
 		var that = this;
-		this.wrapper
-			.find('.ui-showmore-less')
-			.hide().end()
+		this.wrapper.find('.ui-showmore-less').hide().end()
+			.find('.ui-showmore-more').show().end()
 			.animate({height: height}, this.options.duration, function() {
-				that.wrapper.attr('aria-expanded', 'false').find('.ui-showmore-more').show();
+				that.wrapper.attr('aria-expanded', 'false');
 				that.isExpanded = false;
 			});
 
