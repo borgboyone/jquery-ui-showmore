@@ -38,12 +38,17 @@ a {
   .btn {
     padding: 0.75rem 1rem; } }
 
-@media screen and (min-width: 42em) and (max-width: 64em) {
+@media screen and (min-width: 50em) and (max-width: 63.9375em) {
   .btn {
     padding: 0.6rem 0.9rem;
     font-size: 0.9rem; } }
 
-@media screen and (max-width: 42em) {
+@media screen and (min-width: 42em) and (max-width: 49.9375em) {
+  .btn {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem; } }
+
+@media screen and (max-width: 41.9375em) {
   .btn {
     display: block;
     width: 100%;
@@ -53,42 +58,351 @@ a {
       margin-top: 1rem;
       margin-left: 0; } }
 
-.page-header {
+.page-nav {
+      background-color: rgba(96, 102, 102, 1);
+}
+.menu {
+  margin: 0 auto;
+    max-width: 64rem;
+    padding-left: 96px;
+    padding-right: 96px;
+}
+.menu-item {
+  display: inline-block;
+  padding: 0.375rem 0.625rem;
+  line-height: 1.875rem;
+  color: white;
+}
+.menu-item:hover, .menu-item.active {
+  background-color: rgba(200, 200, 200, 0.7);
+}
+.menu-item:hover a, .menu-item.active a {
+  color: #155799;
+  font-weight: bold;
+}
+.menu-item a {
+  color: white;
+  font-weight: bold;
+  padding: 0.375rem 0.625rem;
+}
+.menu-item a:hover {
+  text-decoration: none;
+}
+a.anchor {
+    display: block;
+    position: relative;
+    top: -105px;
+    visibility: hidden;
+}
+.project-banner {
+  background-image: linear-gradient(120deg, #155799, #159957);
+  text-align: center;
+}
+.project-info {
   color: #fff;
   text-align: center;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957); }
+  display: inline-block;
+}
 
+.column-centered {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center; }
+
+/* old collapsed page-header was 81px */
+
+/* standard: desktop or laptop */
 @media screen and (min-width: 64em) {
-  .page-header {
-    padding: 2.5rem 3rem; } }
+.menu {
+  margin: 0 auto;
+  max-width: 64rem;
+  padding-left: 96px;
+  padding-right: 96px;
+}
+.menu-item {
+  display: inline-block;
+  padding: 0.375rem 0.625rem;
+  line-height: 1.5rem;
+  color: white;
+}
+.menu-item a {
+  color: white;
+  font-weight: bold;
+  padding: 6px 10px;
+}
+  .project-info {
+    /* was 2.5rem 3rem */
+    padding: 1.25rem 3rem; }
+  .project-tagline {
+    margin-bottom: 1.75rem;
+  }
+  .collapsed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  body.placeholder:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 327px;
+  }
+  .page-header.collapsed .project-info {
+    padding-top: 16px;
+    padding-bottom: 0px;
+  }
+  .page-header.collapsed .project-info {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1224px;
+    margin: 0 auto;
+  }
+  .page-header.collapsed .project-name {
+    font-size: 2.75rem;
+    margin-top: -0.44em;
+  }
+  .page-header.collapsed .project-tagline {
+    display: none;
+  }
+  .page-header.collapsed .btn {
+    padding: 0.4rem 0.66rem;
+  }
+}
 
-@media screen and (min-width: 42em) and (max-width: 64em) {
-  .page-header {
-    padding: 3rem 4rem; } }
+/* tablet or small laptop */
+@media screen and (min-width: 50em) and (max-width: 63.9375em) {
+.menu {
+  margin: 0 auto;
+    /*max-width: 64rem;*/
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.menu-item {
+  display: inline-block;
+  padding: 4px 6px;
+  color: white;
+}
+.menu-item a {
+  color: white;
+  font-weight: bold;
+  padding: 4px 6px;
+}
+  body.placeholder:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 14.125rem;
+  }
+  .collapsed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .page-header.collapsed .project-info {
+    padding: 0rem 2rem;
+  }
+  .page-header.collapsed .project-info {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1224px;
+    margin: 0 auto;
+  }
+  .page-header.collapsed .project-name {
+    font-size: 2rem;
+    margin-bottom: 0.125rem;
+    /*margin-top: -0.44em;*/
+  }
+  .page-header.collapsed .project-tagline {
+    display: none;
+  }
+  .page-header.collapsed .btn {
+    padding: 0.2rem 0.33rem;
+    margin-bottom: 0;
+  }
+  .page-header.collapsed .btn + .btn {
+    margin-left: 0.3rem;
+  }
+  /*.page-header {
+    padding: 3rem 4rem; } */ 
+}
 
-@media screen and (max-width: 42em) {
+/* phablet */
+@media screen and (min-width: 42em) and (max-width: 49.9375em) {
+.menu {
+  margin: 0 auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.menu-item {
+  display: inline-block;
+  padding: 4px 6px;
+  color: white;
+}
+.menu-item a {
+  color: white;
+  font-weight: bold;
+  padding: 4px 6px;
+}
+  body.placeholder:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 14.125rem;
+  }
+  .collapsed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .page-header.collapsed .project-info {
+    padding: 0rem 1rem;
+  }
+  .page-header.collapsed .project-info {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1224px;
+    margin: 0 auto;
+  }
+  .page-header.collapsed .project-name {
+    font-size: 1.75rem;
+    margin-bottom: 0.250rem;
+    /*margin-top: -0.44em;*/
+  }
+  .page-header.collapsed .project-tagline {
+    display: none;
+  }
+  .page-header.collapsed .btn {
+    font-size: 0.825rem;
+    padding: 0.2rem 0.33rem;
+    margin-bottom: 0;
+  }
+  .page-header.collapsed .btn + .btn {
+    margin-left: 0.250rem;
+  }
+}
+
+/* mobile phone */
+@media screen and (max-width: 41.9375em) {
   .page-header {
-    padding: 2rem 1rem; } }
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0;/*2rem 1rem;*/
+  }
+  body.placeholder:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 11.625rem;
+  }
+  .page-header.collapsed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .project-info {
+    display: inline-block;
+  }
+  .project-tagline {
+    margin-bottom: 1rem;
+    max-width: 26rem;
+  }
+  .page-header.collapsed .project-banner {
+    height: 2.625rem;
+  }
+  .page-header.collapsed .project-name {
+    margin-top: -0.2rem;
+  }
+  .project-tagline {
+    display: inline-block;
+  }
+  .project-github-btns {
+    display: none;
+  }
+  .page-header.collapsed .project-tagline {
+    display: none;
+  }
+  .page-nav {
+    height: 2.625rem;
+    position: relative;
+    overflow-y: visible;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    border-bottom: 0.0625rem solid #4D5252;
+  }
+  .github-menu {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    top: 2.625rem;
+    left: 0;
+    width: 100%;
+    background: rgba(96, 102, 102, 1);
+    border-top: 0.0625rem solid #707878;
+    padding: 0;
+  }
+  .github-menu-item {
+    text-align: right !important;
+  }
+  .menu {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    top: 2.625rem;
+    left: 0;
+    width: 100%;
+    background: rgba(96, 102, 102, 1);
+    border-top: 0.0625rem solid #707878;
+    padding: 0;
+  }
+  .menu-item {
+    height: 2.625rem;
+  }
+  .page-nav .menu-mobile-menu-icon {
+    color: white;
+    font-size: 2rem;
+    line-height: 2.625rem;
+    padding: 0rem 0.5rem;
+  }
+  .page-nav .github-mobile-menu-icon {
+    color: white;
+    font-size: 2.2rem;
+    line-height: 2.625rem;
+    padding: 0rem 0.5rem;
+  }
+}
 
 .project-name {
   margin-top: 0;
-  margin-bottom: 0.1rem; }
+  margin-bottom: 0; }
 
 @media screen and (min-width: 64em) {
   .project-name {
     font-size: 3.25rem; } }
 
-@media screen and (min-width: 42em) and (max-width: 64em) {
+@media screen and (min-width: 42em) and (max-width: 63.9375em) {
   .project-name {
     font-size: 2.25rem; } }
 
-@media screen and (max-width: 42em) {
+@media screen and (max-width: 41.9375em) {
   .project-name {
     font-size: 1.75rem; } }
 
 .project-tagline {
-  margin-bottom: 2rem;
   font-weight: normal;
   opacity: 0.7; }
 
@@ -99,11 +413,16 @@ a {
     margin-left: auto;
     margin-right: auto; } }
 
-@media screen and (min-width: 42em) and (max-width: 64em) {
+@media screen and (min-width: 42em) and (max-width: 63.9375em) {
   .project-tagline {
-    font-size: 1.15rem; } }
+    font-size: 1.15rem;
+    max-width: 660px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.875rem;
+    margin-left: auto;
+    margin-right: auto; } }
 
-@media screen and (max-width: 42em) {
+@media screen and (max-width: 41.9375em) {
   .project-tagline {
     font-size: 1rem; } }
 

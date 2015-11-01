@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>jQuery-UI-ShowMore by Anthony Wells</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="jQuery UI ShowMore is a robust and flexible jQuery UI based widget for expanding and collapsing large areas of content.">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
@@ -11,12 +12,117 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/le-frog/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="javascript/jquery-ui-showmore.js"></script>
+    <script src="javascript/affix.js"></script>
+    <script src="javascript/scrollspy.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui-showmore.css" media="screen">
     <script type="text/javascript">
+      window.profiles = {
+        mobile: {
+          maxWidth: 41.9375,
+          headerSize: {
+            expanded: 11.625,
+            collapsed: 5.25
+          }
+        },
+        phablet: {
+          minWidth: 42,
+          maxWidth: 49.9375,
+          headerSize: {
+            expanded: 14.125,
+            collapsed: 5.25
+          }
+        },
+        tablet: {
+          minWidth: 50,
+          maxWidth: 63.9375,
+          headerSize: {
+            expanded: 14.125,
+            collapsed: 5.5
+          }
+        },
+        standard: {
+          minWidth: 64,
+          headerSize: {
+            expanded: 20.25,
+            collapsed: 6.625,
+          }
+        }
+      };
+      function toPixels(value, target) {
+        var baseFontSize = parseInt($('body').css('fontSize'));
+        return value * baseFontSize;
+      }
+      function calcProfile() {
+        var viewportWidth = $('body').width(),
+            profile = undefined;
+            for (profile in window.profiles) {
+              var temp = window.profiles[profile];
+              if (('maxWidth' in temp) && !('minWidth' in temp)) {
+                if (viewportWidth <= toPixels(temp.maxWidth)) {
+                  return profile;
+                }
+              } else if (('minWidth' in temp) && !('maxWidth' in temp)) {
+                if (viewportWidth >= toPixels(temp.minWidth)) {
+                  return profile;
+                }
+              } else if (('minWidth' in temp) && ('maxWidth' in temp)) {
+                if ((viewportWidth <= toPixels(temp.maxWidth)) && (viewportWidth >= toPixels(temp.minWidth))) {
+                  return profile;
+                }
+              } else {
+                // throw error
+              }
+            }
+            return undefined;
+      }
+      function updateProfile(profile) {
+        window.profile = profile;
+        if (profile == 'mobile') {
+          $('.menu').hide();
+          // $('.github-menu').hide(); // redundant
+          $('.menu-mobile-menu-icon').show();
+          $('.github-mobile-menu-icon').show();
+        } else if ((profile == 'tablet') || (profile == 'phablet') || (profile == 'standard')) {
+          $('.menu-mobile-menu-icon').hide();
+          $('.github-mobile-menu-icon').hide();
+          $('.github-menu').hide();
+          $('.menu').show();
+        }
+      }
       jQuery(document).ready(function($) {
+        window.profile = calcProfile();
+        updateProfile(profile);
+
         $('#example_1').showmore();
         $('#example_2').showmore({moreText:'Lookie, lookie here!', lessText:'Tired of lookin\'', duration:1200, showIcon: false});
+        //$('section.page-header').append('<section class="page-nav"><div class="menu nav nav-menu-items"></div></section>');
+        $('h2:not(.project-tagline)').get().forEach(function(e) { $(e).find('a').clone().empty().removeAttr('id').removeClass().text($(e).text()).wrap('<div class="menu-item"></div>').parent().appendTo('section.page-nav > .menu');});
+        $('body').scrollspy({target: '.page-nav', offset: 10});
+        $('.page-header').on('collapseded.bs.affix', function(event) {
+          $('.page-header').css('top', Math.max(Math.min(toPixels(window.profiles[profile].headerSize.expanded) - $(window).scrollTop(), 0), -toPixels(window.profiles[profile].headerSize.collapsed)) + 'px');
+          $('body').addClass('placeholder');
+          $('.page-header').animate({top: 0}, 400);
+        }).on('collapseded-top.bs.affix', function(event) {
+          $('body').removeClass('placeholder');
+        });
+        $('.page-header').affix({offset: {top: function() { return toPixels(window.profiles[profile].headerSize.expanded) - toPixels(window.profiles[profile].headerSize.collapsed); }}});
+        $(window).resize(function() {
+          var resizedProfile = calcProfile();
+          if (window.profile !== resizedProfile) { //getCurrentProfile()
+            console.log("New Profile!" + resizedProfile);
+            updateProfile(resizedProfile);
+          }
+        });
+        $('.menu-mobile-menu-icon').click(function(event) {
+          $('.github-menu').hide();
+          $('.menu').toggle();
+        });
+        $('.github-mobile-menu-icon').click(function(event) {
+          $('.menu').hide();
+          $('.github-menu').toggle();
+        });
       });
     </script>
     <style>
@@ -37,13 +143,29 @@
       }
     </style>
   </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">jQuery-ui-showmore</h1>
-      <h2 class="project-tagline">Robust and flexible jQuery UI based widget for expanding and collapsing large areas of content via &quot;Show More&quot; and &quot;Show Less&quot; controls.</h2>
-      <a href="https://github.com/borgboyone/jquery-ui-showmore" class="btn">View on GitHub</a>
-      <a href="https://github.com/borgboyone/jquery-ui-showmore/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/borgboyone/jquery-ui-showmore/tarball/master" class="btn">Download .tar.gz</a>
+  <body data-spy="scroll" style="position: relative;">
+    <section class="page-header" data-spyxxx="affix" data-offset-top="102">
+      <div class="project-banner">
+      <div class="project-info">
+        <h1 class="project-name">jQuery-ui-showmore</h1>
+        <h2 class="project-tagline">Robust and flexible jQuery UI based widget for expanding and collapsing large areas of content via &quot;Show More&quot; and &quot;Show Less&quot; controls.</h2>
+        <div class="project-github-btns">
+          <a href="https://github.com/borgboyone/jquery-ui-showmore" class="btn">View on GitHub</a>
+          <a href="https://github.com/borgboyone/jquery-ui-showmore/zipball/master" class="btn">Download .zip</a>
+          <a href="https://github.com/borgboyone/jquery-ui-showmore/tarball/master" class="btn">Download .tar.gz</a>
+        </div>
+      </div>
+      </div>
+      <section class="page-nav">
+        <div class="fa fa-bars menu-mobile-menu-icon" style="display: none;"></div>
+        <div class="fa fa-github-square github-mobile-menu-icon" style="display: none;"></div>
+        <div class="menu nav nav-menu-items"></div>
+        <div class="github-menu" style="display: none;">
+          <div class="menu-item github-menu-item"><a href="https://github.com/borgboyone/jquery-ui-showmore">View on GitHub</a></div>
+          <div class="menu-item github-menu-item"><a href="https://github.com/borgboyone/jquery-ui-showmore/zipball/master">Download .zip</a></div>
+          <div class="menu-item github-menu-item"><a href="https://github.com/borgboyone/jquery-ui-showmore/tarball/master">Download .tar.gz</a></div>
+        </div>
+      </section>
     </section>
 
     <section class="main-content">
