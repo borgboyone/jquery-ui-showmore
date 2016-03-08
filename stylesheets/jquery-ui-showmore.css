@@ -19,6 +19,19 @@
     /*display: inline-block;*/
     position: relative;
 }
+.ui-showmore-pop-out-anchor {
+    position: relative;
+    max-height: 200px;
+}
+.ui-showmore-pop-out-anchor div[aria-expanded='true'] {
+    padding: 6px 10px;
+    z-index: 1;
+    overflow: hidden;
+    position: absolute;
+    box-shadow: 0px 0px 10px 10px rgb(184, 184, 184);
+    border: 1px solid rgb(204, 204, 204);
+    background-color: white;
+}
 /* Gradient example for show more control */
 .ui-showmore-more {
     width: 100%;

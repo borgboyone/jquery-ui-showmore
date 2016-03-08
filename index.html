@@ -126,6 +126,9 @@
       });
     </script>
     <style>
+      .italics {
+        font-style: italic;
+      }
       @media screen and (min-width: 64em) {
         .examples {
           display: flex;
@@ -269,6 +272,8 @@
 An initial CSS class is provided (<em>ui-shomore-initial</em>) for users to apply to the content area so that the content displays in a collapsed state on page render and also to prevent content bounce on showmore initialization. Inline CSS is also acceptable.  Remember to use <em>max-height</em> and not <em>height</em> for correct functionality.
 The provided example CSS illustrates the use of a linear fade for collapsed content since many users desire this functionality.</p>
 
+<p class="italics">Since the initial release, several people have asked me if it was possible to have the wrapper expand without changing the layout of the page.  As I've pointed out, this is easily achieved with CSS alone and no changes to the library are necessary.  As a proof of concept, I've modified Example #1 to "pop-out" as it expands.  You can examine the CSS and the additional div wrapper that I've added via inspection.  (Keep in mind, this wrapper may not be needed if you have no other siblings.)  Some of this does beg the question, should the library use additional classes for expansion, fully expanded, and even collapsed?  Another request was the introduction of a callback mechanism when expansion (or collapsing) is completed.  I will consider all of these things in due time.  Thanks for the feedback!</p>
+
 <h2>
 <a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
@@ -276,9 +281,11 @@ The provided example CSS illustrates the use of a linear fade for collapsed cont
   <div>
     <h3>Example #1</h3>
     <div class="highlight highlight-source-js"><pre>    $(<span class="pl-s"><span class="pl-pds">'</span>#example_1<span class="pl-pds">'</span></span>).showmore();</pre></div>
+    <div class="ui-showmore-pop-out-anchor">
     <div id="example_1" class="ui-showmore-initial"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
+  </div>
   </div>
   <div>
     <h3>Example #2</h3>
